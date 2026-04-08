@@ -27,10 +27,26 @@ header h1{
 
 #producto-contenedor {
     display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
     margin: 90px auto;
-    display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
+    max-width: 1200px;
+    padding: 20px;
+    place-items: center;
+}
+
+/* Media query para tablets */
+@media (max-width: 1024px) {
+    #producto-contenedor {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Media query para móviles */
+@media (max-width: 768px) {
+    #producto-contenedor {
+        grid-template-columns: repeat(1, 1fr);
+    }
 } 
 
 
@@ -40,8 +56,44 @@ header h1{
 }  
 
 .card{
-    margin: 20px;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 25px 0px;
+    height: 100%;
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+}
+
+.card-img-top.loaded {
+    animation: none;
+    background: none;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+.card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 
@@ -52,21 +104,26 @@ header h1{
   display: flex;
   align-items: center;
   justify-content: center;
-  position: absolute; 
-  background-color: transparent;
+  position: fixed; 
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
   width: 100%;
   height: 100vh;
   visibility: hidden;
+  opacity: 0;
   z-index: 100;
+  transition: all 0.3s ease;
 } 
 
 .hidden {
   display: none;
 }
+
 .modal-active {
   opacity: 1;
   visibility: visible;
-  z-index: 5;
+  z-index: 1000;
 }
 
 .modal-carrito{
@@ -75,10 +132,11 @@ header h1{
   min-width: 500px;
   padding: 20px;
   text-align: center; 
-  transition: all.2;
+  transition: all 0.2s;
   border-radius: 10px;
   box-shadow: rgb(0 0 0 / 15%) 0px 5px 15px 0px;
-  margin-bottom: 16rem;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 
