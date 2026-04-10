@@ -1,5 +1,9 @@
-import { carritoIndex } from "./carritoIndex.js";
 import { getData } from "./getData.js";
+import { CartManager } from "./cartManager.js";
+import { renderizarProductoEnCarrito } from "./cartRenderer.js";
+import { inicializarListenerEliminacion } from "./carritoIndex.js";
+
+const cart = new CartManager();
 
 export const mostrarProductos = async () => {
 
@@ -23,7 +27,7 @@ export const mostrarProductos = async () => {
                         <h5 class="card-title">${producto.nombre}</h5>
                         <p class="card-text">Descripción:  ${producto.desc}</p>
                         <p class="card-text">Precio: ${producto.precio}</p>
-                        <button class="btn btn-primary comprar-btn" data-id="${producto.id}" data-nombre="${producto.nombre}">
+                        <button class="btn btn-primary comprar-btn" data-id="${producto.id}" data-nombre="${producto.nombre}" data-precio="${producto.precio}">
                          Comprar
                          </button>
                     </div>
@@ -47,8 +51,11 @@ export const mostrarProductos = async () => {
             if (btn) {
                 const productoId = btn.dataset.id;
                 const productoNombre = btn.dataset.nombre;
+                const productoPrecio = btn.dataset.precio;
                 
-                carritoIndex(productoId);
+                cart.addProduct(productoId, productoNombre, productoPrecio);
+                renderizarProductoEnCarrito(productoId, productoNombre, productoPrecio);
+                inicializarListenerEliminacion(); // Seguro llamar múltiples veces
                 
                 Toastify({
                     text: `Se añadió ${productoNombre} al carrito`,

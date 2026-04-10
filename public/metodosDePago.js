@@ -1,9 +1,11 @@
 //import { productos } from "./stock.js";
+import { CartManager } from "./cartManager.js";
+
+const cart = new CartManager();
 
 const getTotalCarrito = () => {
-    const localStorageCarrito = JSON.parse(localStorage.getItem("carrito"));
-    return localStorageCarrito.reduce((acc, el) => acc + el.precio, 0);
-    };
+    return cart.getTotalPrice();
+};
 
             function limpiarMetodoDePago (){
                 const divALimpiar = document.querySelector('.limpiar');
